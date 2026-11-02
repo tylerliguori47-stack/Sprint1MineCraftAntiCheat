@@ -1,0 +1,1 @@
+Add sanitized screenshots here: server startup, localhost connection, whitelist activity, and `/plugins` listing. Original screenshots were described in the user-supplied Sprint 1 report; they were not recovered as standalone image files in this package.

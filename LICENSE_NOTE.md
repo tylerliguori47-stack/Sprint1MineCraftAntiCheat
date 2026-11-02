@@ -1,0 +1,1 @@
+No license has been selected. Confirm ownership and team approval before adding an open-source license or publishing course work. Do not commit client data, passwords, worlds, or private server settings.

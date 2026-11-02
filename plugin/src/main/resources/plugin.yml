@@ -1,0 +1,14 @@
+name: MinecraftAntiCheat
+version: ${project.version}
+main: edu.csusm.cs370.anticheat.MinecraftAntiCheatPlugin
+api-version: '1.21'
+author: CS370 Team
+commands:
+  anticheat:
+    description: Show the current anti-cheat scaffold status
+    usage: /anticheat status
+    permission: anticheat.status
+permissions:
+  anticheat.status:
+    description: View anti-cheat scaffold status
+    default: op
