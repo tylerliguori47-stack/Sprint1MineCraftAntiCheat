@@ -1,0 +1,27 @@
+INFO Sprint 3 AntiCheat enabled: Speed, Flight, violation log, staff alerts
+WARNING AntiCheat: TestPlayer SPEED 9.0
+WARNING AntiCheat: TestPlayer SPEED 10.0
+WARNING AntiCheat: TestPlayer SPEED 11.0
+WARNING AntiCheat: TestPlayer SPEED 12.0
+WARNING AntiCheat: TestPlayer SPEED 13.0
+WARNING AntiCheat: TestPlayer SPEED 14.0
+WARNING AntiCheat: TestPlayer SPEED 15.0
+WARNING AntiCheat: TestPlayer SPEED 16.0
+WARNING AntiCheat: TestPlayer SPEED 17.0
+WARNING AntiCheat: TestPlayer SPEED 18.0
+WARNING AntiCheat: TestPlayer SPEED 19.0
+WARNING AntiCheat: TestPlayer SPEED 20.0
+WARNING AntiCheat: TestPlayer SPEED 21.0
+WARNING AntiCheat: TestPlayer SPEED 22.0
+WARNING AntiCheat: TestPlayer SPEED 23.0
+WARNING AntiCheat: TestPlayer SPEED 24.0
+WARNING AntiCheat: TestPlayer SPEED 25.0
+WARNING AntiCheat: TestPlayer SPEED 26.0
+WARNING AntiCheat: TestPlayer SPEED 27.0
+WARNING AntiCheat: TestPlayer SPEED 28.0
+WARNING AntiCheat: TestPlayer SPEED 29.0
+WARNING AntiCheat: TestPlayer SPEED 30.0
+WARNING AntiCheat: TestPlayer SPEED 31.0
+WARNING AntiCheat: TestPlayer SPEED 32.0
+WARNING AntiCheat: TestPlayer SPEED 33.0
+INFO Sprint 3 AntiCheat enabled: Speed, Flight, violation log, staff alerts

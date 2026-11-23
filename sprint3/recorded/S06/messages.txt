@@ -1,0 +1,2 @@
+Moderator > [AntiCheat] Threshold configuration reloaded. Alert cooldown changes need restart.
+Moderator > [AntiCheat] TestPlayer failed SPEED (4.00)

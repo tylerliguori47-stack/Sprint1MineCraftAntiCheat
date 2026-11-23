@@ -1,0 +1,2 @@
+Moderator > /anticheat reload
+[AntiCheat] Threshold configuration reloaded. Alert cooldown changes need restart.

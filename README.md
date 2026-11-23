@@ -1,47 +1,35 @@
-# Minecraft Anti-Cheat — CS 370
+# CS 370 Minecraft AntiCheat · Sprint 3
 
-A team course project for a server-side Minecraft Java Edition anti-cheat plugin.
+This branch contains the team's Sprint 3 Paper plugin and an offline demonstration. The plugin watches for repeated speed and flight anomalies, alerts moderators and saves the latest violations for review.
 
-> **Project status:** Sprint 1 verified a locally running Minecraft server, localhost client connection, whitelist activity, and a plugin named `MinecraftAntiCheat` visible in the server's plugin list. **Cheat detection, violation logging, alerting, and enforcement were not demonstrated by the provided evidence.**
+**November 23 test run:** 18 offline checks passed. Two scenarios reproduced limits. The four original Java classes processed simulated player inputs and wrote real log files. The November 20 Windows Maven build succeeded. Startup and gameplay on Paper 1.21.4 with this Sprint 3 JAR still need a live check.
 
-## What was demonstrated in Sprint 1
+## Try the demo with a browser
 
-| Task | Evidence / result |
+1. [Download this branch as a ZIP](https://github.com/tylerliguori47-stack/Sprint1MineCraftAntiCheat/archive/refs/heads/sprint-3.zip), then extract it.
+2. Open `sprint3/OPEN-RESULTS.html` in a browser. You can also download just the [standalone HTML file](sprint3/OPEN-RESULTS.html?raw=true).
+3. Click **Run log check**. It compares 25 captured disk records with the 20 rows actually returned by the recent command after reopening the data folder. Expand **S02**, **F02** and **H01** to follow movement through detection, chat and saved history.
+
+The browser check works offline without Minecraft, Java or administrator access. To execute all 20 Java scenarios again, run `java -jar sprint3-checks.jar` from the extracted `sprint3` folder with Java 21, or double-click `RUN-TESTS.cmd` on Windows. A fresh run writes its own report and logs under `runs`.
+
+## Sprint 3 materials
+
+| Material | Contents |
 | --- | --- |
-| Start a local Minecraft server | Startup console completed world loading |
-| Join the server | Minecraft client used Direct Connection to `localhost` and entered world |
-| Basic access control | Whitelist activity appeared in server console |
-| Verify plugin loaded | `/plugins` displayed `MinecraftAntiCheat` |
+| [Sprint backlog](sprint3/BACKLOG.md) | Five stories and 20 planned story points, with acceptance criteria, evidence and remaining work |
+| [Presentation and report (PDF)](sprint3/CS370_Sprint3_Backlog_and_Test_Report.pdf) · [editable report (Word)](sprint3/CS370_Sprint3_Backlog_and_Test_Report.docx) | Backlog, test results, build evidence and a two-minute demonstration script |
+| [Original plugin source](sprint3/Sprint3_MinecraftAntiCheat/plugin) | Java classes, Maven build and Paper configuration |
+| [Test scenarios](sprint3/checks/src/review/Scenarios.java) · [recorded output](sprint3/recorded/transcript.txt) | Inputs, assertions and results for every scenario |
+| [Saved log](sprint3/recorded/H02/plugins/MinecraftAntiCheat/violations.log) · [recent command output](sprint3/recorded/H02/recent-after-reopen.txt) | The two files compared by the browser demo |
+| [Setup and reproduction](sprint3/START-HERE.txt) | Portable Java instructions, feature-specific runs and rebuilding the test runner |
 
-See [docs/SPRINT1.md](docs/SPRINT1.md) and [docs/SETUP.md](docs/SETUP.md).
+## Observed behavior
 
-## Repository contents
+- **Speed.** Ordinary travel produced zero flags. Two consecutive samples above the 8 blocks/s threshold produced a SPEED record. The reloaded 2 blocks/s threshold flagged the same 4 blocks/s input.
+- **Flight.** A level airborne path flagged on its 15th position-changing move and sustained ascent on its 17th. Four jump-shaped traces produced zero flags.
+- **Moderator controls.** The handler denied all three admin commands to an unauthorized sender. Four flag calls produced four disk records and three staff alerts because repeated chat was throttled.
+- **Two limits.** Forty events with identical airborne coordinates produced zero flags. In a modeled water block, a fast-moving player with the swimming state off triggered SPEED. The swimming control was exempt.
 
-- `plugin/`: **newly created, minimal example** Paper plugin scaffold for future development. **Not the original Sprint 1 plugin source.** It logs on startup and implements `/anticheat status`.
-- `docs/`: course project progress, proposed features, setup and testing instructions, and requirement mappings.
-- `docs/usecase_diagram.png`: revised use-case diagram, if included.
+The original nine project files are preserved in the Sprint 3 source directory. The review adds test fixtures, a desktop runner, captured evidence, documentation and the browser demo. The plugin uses alert-only enforcement.
 
-## Getting started
-
-1. Install a compatible Java JDK and a Paper Minecraft server. **Confirm the actual server version used by the team.** The example scaffold below targets Paper **1.21.4 / Java 21**; adjust as necessary.
-2. Read [docs/SETUP.md](docs/SETUP.md) for your current Minecraft server startup steps.
-3. To build the **example source**: `cd plugin && mvn clean package` (requires Maven and network access for first-time dependencies).
-4. Copy `plugin/target/MinecraftAntiCheat-0.1.0-SNAPSHOT.jar` into the server's `plugins/` folder and restart the server.
-5. In-game or console: `/plugins`; then `/anticheat status` (the second command exists only in the **new example scaffold**, not verified in the Sprint 1 plugin).
-
-**Do not put an old and a newly built plugin JAR with the same plugin name in `plugins/` simultaneously.** Back up your original JAR first.
-
-## Planned functionality (not yet evidenced)
-
-- Detect abnormal movement, with permitted-flight / teleport exemptions.
-- Record timestamped player violations and details.
-- Alert authorized moderators and show recent violation history.
-- Configure detection thresholds, alert-only mode, and escalation rules.
-
-## Project documentation
-
-The [SRS](docs/REQUIREMENTS.md) defines these goals. The revised Lab 7 use cases cover detecting violations, reviewing player violations, configuring detection, managing enforcement, and viewing system status.
-
-## Academic accuracy
-
-This repository combines **verified Sprint 1 progress**, **documented future requirements**, and a **fresh example plugin scaffold**. It does not claim the source of the original installed plugin has been recovered. Add the actual team's server scripts, plugin source, test output, screenshots, and team-approved contribution details when available.
+The Sprint 3 source builds on the [team's Sprint 1 scaffold](https://github.com/tylerliguori47-stack/Sprint1MineCraftAntiCheat/tree/main) and credits [SJ-coder7's Sprint 2 movement checks](https://github.com/SJ-coder7/Sprint-2-Anti-Cheats-Flight-and-Speed).

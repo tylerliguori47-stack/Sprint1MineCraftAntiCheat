@@ -1,0 +1,59 @@
+CS 370 | Minecraft AntiCheat | Sprint 3 offline demo
+Reviewed November 23, 2026
+
+OPEN THE DEMO WITH A BROWSER
+1. Extract the ZIP into a folder you can write to, such as Documents.
+2. Open OPEN-RESULTS.html in Edge, Chrome, Firefox or Safari.
+3. Click "Run log check". Your browser checks all 25 saved records and compares the latest 20 with the actual recent-command output after the history was reopened.
+4. Open S02, F02 and H01 to see the detection inputs, actual results and moderator chat. Select "Documented limits" to show both gaps.
+
+All evidence is embedded in the HTML. It works offline. The browser runs a fresh check of the captured log. The Java results shown below it come from the dated run. The adjacent Word report contains the five-item sprint backlog and a two-minute narration guide.
+
+RERUN THE JAVA TESTS
+With Java 21 or newer, double-click RUN-TESTS.cmd on Windows. On any system with Java available, open a terminal in this folder and run:
+
+  java -jar sprint3-checks.jar
+
+For one feature, add a group name:
+
+  java -jar sprint3-checks.jar speed
+  java -jar sprint3-checks.jar flight
+  java -jar sprint3-checks.jar history
+  java -jar sprint3-checks.jar staff
+
+The suite typically takes around ten seconds. Each run writes a new folder under runs. Open that folder's report.html or transcript.txt. A FAIL sets exit code 1 and leaves a failure.txt in the case directory. A documented LIMIT is printed separately. The program works offline and uses only local test data. It needs no Paper server, Minecraft client, Maven installation or elevated permissions.
+
+If Windows does not have Java and you can run portable apps, download the Java 21 Windows ZIP for your machine from Eclipse Adoptium. Choose JRE to run the tests or JDK to rebuild. Extract it so runtime\bin\java.exe sits alongside the runner under this demo folder, e.g. Sprint3_Offline_Demo\runtime\bin\java.exe. Double-click RUN-TESTS.cmd. The launcher uses this local runtime first. You do not need to change PATH. The browser demo above works on its own.
+  https://adoptium.net/temurin/releases?version=21
+
+WHAT WAS CHECKED
+MinecraftAntiCheatPlugin.java handles startup, status, recent and reload.
+SpeedCheck.java samples horizontal movement and requires a consecutive streak.
+FlightCheck.java examines position-changing moves for hover or sustained rise.
+ViolationStore.java formats and appends records, retains the newest 20 and sends warnings and permission-gated chat.
+
+The included four classes were compiled directly from the original project bytes. The fixture supplies a small Bukkit API surface, modeled player states, explicit permission values and manual dispatch to the registered timer/listeners. The plugin calculates rates using its own elapsed-time clock. It receives the actual copied config.yml and writes real data files. The H02 persistence test constructs a fresh plugin that reopens the same data folder. H02 seeds 25 reporting calls directly. H01 exercises the path from a movement event through to storage and chat.
+
+PRESENTATION EVIDENCE
+- recorded/transcript.txt contains every scenario and its observed result.
+- recorded/S02/plugins/MinecraftAntiCheat/violations.log is a real SPEED record written by the detector in the fixture.
+- recorded/H01/messages.txt, console.txt and commands.txt show staff chat, the warning and recent-command output for one detected airborne movement sequence.
+- recorded/H02/plugins/MinecraftAntiCheat/violations.log contains the 25 reporting-test inputs saved by the plugin.
+- recorded/H02/recent-after-reopen.txt is the actual 20-row reply, with its header and in-game color codes removed.
+- recorded/build-result.png is a cropped excerpt of the team's November 20 Windows Maven success screenshot. A separate screenshot from the same session shows the 0.3.0-SNAPSHOT JAR in the Paper plugins folder.
+- recorded/results.json contains the data used by the standalone browser page, including source hashes and both H02 files.
+
+WHAT THE RESULTS MEAN
+The recorded run has 18 passing checks and 2 documented limits. L01 covers stationary hover. L02 shows how the speed check treats a water block when the player is not in the swimming state. Live Paper enablement, actual permissions and events, ordinary movement on terrain and server restart behavior are open checks. The application reports flags to staff. The original policy is alert-only.
+
+SOURCE AND CHANGES
+Sprint3_MinecraftAntiCheat/ contains the 9 source and project files from Sprint3_MinecraftAntiCheat_Source.zip v2, verified byte for byte.
+Original ZIP SHA-256:
+773c3110a19eb3191e1a92f8149d5110dec31f2b498c80a048b878785d508e41
+
+All review additions are outside that project folder. checks/src/review/ holds the scenarios, test players, executor and report writer. checks/src/org/ supplies the test-only API. Build.java builds the desktop test runner from the included Java sources and config. To rebuild with a Java 21 JDK from this directory:
+
+  java Build.java
+  java -jar sprint3-checks.jar
+
+The independently deployable Paper plugin is built from Sprint3_MinecraftAntiCheat/plugin/pom.xml. The supplied sprint3-checks.jar is the desktop test runner. The existing GitHub project and the prior submission were left as supplied.

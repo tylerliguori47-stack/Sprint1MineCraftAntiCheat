@@ -1,0 +1,4 @@
+Moderator > /anticheat status
+[AntiCheat] Sprint 3 active | Checks: Speed, Flight | Mode: alert only
+Moderator > /anticheat 
+[AntiCheat] Sprint 3 active | Checks: Speed, Flight | Mode: alert only

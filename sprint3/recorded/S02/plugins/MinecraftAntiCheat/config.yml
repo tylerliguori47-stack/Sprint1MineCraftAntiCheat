@@ -1,0 +1,10 @@
+# Conservative defaults for classroom testing. Alert-only: no automatic kicks or setbacks.
+speed:
+  max-blocks-per-second: 8.0
+  consecutive-samples: 2
+flight:
+  minimum-air-moves: 12
+  consecutive-suspicious-moves: 3
+alerts:
+  enabled: true
+  cooldown-ms: 5000

@@ -1,0 +1,8 @@
+TestPlayer > /anticheat status
+You don't have permission to use this command.
+TestPlayer > /anticheat recent
+You don't have permission to use this command.
+TestPlayer > /anticheat reload
+You don't have permission to use this command.
+Moderator > /anticheat recent
+[AntiCheat] Last 0 violation(s):

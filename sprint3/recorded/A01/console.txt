@@ -1,0 +1,5 @@
+INFO Sprint 3 AntiCheat enabled: Speed, Flight, violation log, staff alerts
+WARNING AntiCheat: TestPlayer SPEED 16.0
+WARNING AntiCheat: TestPlayer SPEED 17.0
+WARNING AntiCheat: TestPlayer FLIGHT_HOVER 0.0
+WARNING AntiCheat: AdminWithoutAlerts SPEED 18.0

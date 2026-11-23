@@ -1,0 +1,53 @@
+CS 370 Sprint 3 | Offline Java checks | 2026-11-23T21:41:54.503542938Z
+Java 21.0.13.1+2-1-deb13u1-Debian | group all
+Inputs are simulated. Detection, command handlers and log I/O use the project sources.
+[PASS] C01  Enable and status
+  2 listeners registered. Timer delay and period are both 5 ticks in the fixture.
+  [AntiCheat] Sprint 3 active | Checks: Speed, Flight | Mode: alert only
+[PASS] C02  Command permissions
+  3 of 3 direct command-handler calls denied. Admin recent returned 0 entries.
+[PASS] S01  Ordinary horizontal travel
+  4 samples at approximately 4 blocks/s with an 8 blocks/s limit. Disk records = 0.
+[PASS] S02  Two fast samples
+  Disk records after fast samples 1 and 2 = 0, then 1.
+  2026-11-23T21:41:56.106486924Z | 55a62a32-8a50-3d2a-99a5-52511a085e54 | SPEED | 19.930 | 8.000
+[PASS] S03  Interrupted speed streak
+  20, 4, 20 blocks/s produced 0 flags. One more 20 blocks/s sample produced 1.
+[PASS] S04  Teleport and reconnect
+  0 flags across both resets. Two fresh high samples produced 1 SPEED record.
+[PASS] S05  Speed exemptions
+  Ordinary control = 1 flag. All 11 exempt states = 0 flags.
+[PASS] S06  Threshold reload
+  Same 4 blocks/s input. Threshold 8 = 0 flags. Threshold 2 after reload = 1 flag.
+  2026-11-23T21:41:59.654502637Z | 55a62a32-8a50-3d2a-99a5-52511a085e54 | SPEED | 3.998 | 2.000
+[PASS] F01  Jump and landing
+  4 scripted jumps with a landing between each. Disk records = 0.
+[PASS] F02  Level airborne travel
+  14 level air moves = 0 records. Move 15 = 1 FLIGHT_HOVER.
+  2026-11-23T21:41:59.660041450Z | 55a62a32-8a50-3d2a-99a5-52511a085e54 | FLIGHT_HOVER | 0.000 | 0.030
+[PASS] F03  Sustained ascent
+  16 rising moves = 0 records. Move 17 = 1 FLIGHT_ASCEND.
+  2026-11-23T21:41:59.662032438Z | 55a62a32-8a50-3d2a-99a5-52511a085e54 | FLIGHT_ASCEND | 0.120 | 0.030
+[PASS] F04  Flight exemptions
+  Ordinary control = 1 hover flag. All 13 selected exempt states = 0 flags.
+[PASS] F05  Flight history resets
+  0 flags through landing, teleport and reconnect. Fresh move 15 produced 1 hover flag.
+[PASS] H01  From movement to moderator history
+  1 registered-listener flag, 1 staff chat, 0 ordinary-player chats, 1 console warning. Recent exactly matched disk.
+  [AntiCheat] TestPlayer failed FLIGHT_HOVER (0.00)
+  2026-11-23T21:41:59.670364758Z | 55a62a32-8a50-3d2a-99a5-52511a085e54 | FLIGHT_HOVER | 0.000 | 0.030
+[PASS] H02  Last 20 and disk persistence
+  25 records on disk. The command returned rows 6–25 in order both times. New instance loaded the same 20 from the file.
+  First retained observation = 14.000. Last retained observation = 33.000.
+[PASS] A01  Staff alerts and cooldown
+  4 flags = 4 disk entries, 4 warnings, 3 staff alerts, 0 messages to either sender without the alerts permission.
+[PASS] A02  Disable staff chat
+  With alerts.enabled=false, 0 staff alerts, 1 warning and 1 disk entry.
+[PASS] A03  Cooldown configuration lifetime
+  Flags 1.2 seconds apart produced 1 chat after reload and 2 chats with a fresh instance.
+[LIMIT] L01  Stationary hover coverage
+  1 airborne movement followed by 40 identical-position events produced 0 flags. The current hover check needs position changes.
+[LIMIT] L02  Water exemption in the README
+  At 20 blocks/s in a water block, the non-swimming input produced 1 SPEED flag. The swimming input produced 0. The README describes water more broadly.
+  2026-11-23T21:42:02.594746296Z | 55a62a32-8a50-3d2a-99a5-52511a085e54 | SPEED | 19.990 | 8.000
+18 passed | 2 documented limits | 0 unexpected failures

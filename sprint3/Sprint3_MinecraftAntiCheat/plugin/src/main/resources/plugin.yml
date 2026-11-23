@@ -1,0 +1,21 @@
+name: MinecraftAntiCheat
+version: ${project.version}
+main: edu.csusm.cs370.anticheat.MinecraftAntiCheatPlugin
+api-version: '1.21'
+author: CS370 Team
+description: Sprint 3 speed and flight detection with moderator alerts and persistent logs
+commands:
+  anticheat:
+    description: View anti-cheat status and violation history
+    usage: /anticheat [status|recent|reload]
+    permission: anticheat.admin
+permissions:
+  anticheat.admin:
+    description: Manage anti-cheat and view violation history
+    default: op
+  anticheat.alerts:
+    description: Receive violation alerts
+    default: op
+  anticheat.bypass:
+    description: Exempt trusted players from movement checks
+    default: false

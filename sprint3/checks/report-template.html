@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minecraft anti-cheat · Sprint 3 test results</title>
+<style>
+:root{color-scheme:light;--ink:#182d31;--muted:#486166;--line:#c8d7d5;--green:#176551;--pale:#e7f4ed;--gold:#80500d;--sand:#fff2d5;--danger:#a23032}
+*{box-sizing:border-box}
+body{margin:0;background:#f1f5f3;color:var(--ink);font:16px/1.52 "Segoe UI",Arial,sans-serif}
+main{max-width:992px;margin:auto;padding:34px 30px 60px}
+header{padding:24px 0 14px}
+.course{font-size:.83rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--green);margin:0 0 9px}
+h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.05;letter-spacing:-.035em;margin:0 0 14px}
+h2{font-size:1.35rem;line-height:1.2;margin:0 0 8px}
+h3{font-size:1rem;margin:16px 0 6px}
+p{margin:6px 0 12px}.lead{max-width:78ch}.muted{color:var(--muted);font-size:.91rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0 22px}
+.stat{padding:13px 17px;background:#fff;border:1px solid var(--line);border-radius:9px}
+.stat strong{display:block;font:700 1.9rem/1.12 "Segoe UI",Arial,sans-serif}.stat span{font-size:.9rem}
+.panel{border:1px solid var(--line);background:#fff;border-radius:12px;padding:22px 24px;margin:14px 0}
+button,select{font:inherit;border-radius:6px;padding:8px 14px}
+button{background:var(--green);color:#fff;border:1px solid var(--green);font-weight:650;cursor:pointer}
+button:hover{background:#0a4b3b}
+select{border:1px solid #97afaa;color:var(--ink);background:white;max-width:100%}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #326a99;outline-offset:3px}
+.audit{display:flex;align-items:center;flex-wrap:wrap}.audit button{margin:4px 14px 4px 0}
+#audit-status{font-weight:650;max-width:60ch}
+.ok{color:var(--green)}.bad{color:var(--danger)}
+details{border-top:1px solid var(--line)}
+summary{cursor:pointer;padding:12px 0;overflow-wrap:anywhere}
+.case summary{display:flex;align-items:center;flex-wrap:wrap}.case summary>*{margin-left:9px}.case summary::-webkit-details-marker{display:none}
+.case summary::before{content:'▸';color:var(--muted)}
+.case[open] summary::before{content:'▾'}
+.case-body{padding:0 0 12px 21px}
+.badge{font-size:.74rem;font-weight:700;padding:2px 7px;border-radius:4px;color:var(--green);background:var(--pale)}
+.badge.limit{color:var(--gold);background:var(--sand)}.badge.fail{color:var(--danger);background:#ffedeb}
+.caseid{font-size:.79rem;color:var(--muted);font-family:Consolas,monospace}
+.cases-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+pre{background:#f2f5f3;border-radius:6px;padding:12px 14px;font:13px/1.5 Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:6px 0 12px}
+a{color:var(--green)}[hidden]{display:none!important}
+@media(max-width:600px){main{padding:14px 12px 30px}.panel{padding:16px}.stats{gap:5px}.stat{padding:10px}.stat span{font-size:.79rem}.case-body{padding-left:6px}}
+@media print{body,main{background:white}.panel,.stat{break-inside:avoid}button,select,.filter-label{display:none}}
+</style>
+</head>
+<body><main>
+<header>
+<p class="course">CS 370 · Sprint 3</p>
+<h1>Minecraft anti-cheat test results</h1>
+<p class="lead">The original Java plugin processed simulated movement, handled moderator commands and wrote violation files. This page contains the recorded run and a log check you can execute in your browser.</p>
+<p class="muted" id="run-meta"></p>
+</header>
+<section aria-label="Recorded test totals" class="stats">
+<div class="stat"><strong class="ok" id="passes">–</strong><span>Checks passed</span></div>
+<div class="stat"><strong style="color:var(--gold)" id="limits">–</strong><span>Documented limits</span></div>
+<div class="stat"><strong id="failures">–</strong><span>Unexpected failures</span></div>
+</section>
+<section class="panel" id="audit-panel">
+<h2>Verify the saved history</h2>
+<p>Test H02 supplied 25 flags to the plugin’s reporting code. Check the format of the saved records and compare the last 20 with the actual <code>/anticheat recent</code> reply after a fresh plugin instance reopened the folder.</p>
+<div class="audit"><button type="button" id="audit-btn">Run log check</button><span role="status" aria-live="polite" id="audit-status">Ready to compare the recorded files.</span></div>
+<details style="margin-top:14px"><summary>Inspect the two recorded files</summary>
+<h3>Disk log</h3><pre id="disk-raw"></pre><h3>Recent command rows after reopening</h3><pre id="recent-raw"></pre>
+</details>
+</section>
+<section class="panel">
+<div class="cases-head"><div><h2>Recorded Java checks</h2><span class="muted">Open a check to compare its expectation and output.</span></div>
+<label class="filter-label">Show <select id="filter"><option value="all">All checks</option><option value="speed">Speed</option><option value="flight">Flight</option><option value="history">History</option><option value="staff">Staff and commands</option><option value="LIMIT">Documented limits</option></select></label></div>
+<div id="cases"></div></section>
+<section class="panel"><h2>Reproduce the run</h2>
+<p>Extract the offline demo ZIP to a writable folder. With Java 21 available, double-click <strong>RUN-TESTS.cmd</strong> on Windows or run the command below from the extracted folder. Each run saves fresh results under <code>runs</code>.</p>
+<pre>java -jar sprint3-checks.jar</pre>
+<p class="muted">The fixture supplies players, events, permission values and a scheduler callback. Paper startup, real client movement and live server permissions still need a server test.</p>
+<details><summary>Reviewed source file hashes</summary><pre id="hashes"></pre></details>
+</section>
+<noscript>Enable JavaScript in your browser to display the saved run, or open recorded/transcript.txt in the demo ZIP.</noscript>
+</main>
+<script id="run-data" type="application/json">{{RUN_DATA}}</script>
+<script>
+'use strict';
+const run=JSON.parse(document.getElementById('run-data').textContent);
+const el=id=>document.getElementById(id);
+const cases=run.cases;
+for (const [state,id] of [['PASS','passes'],['LIMIT','limits'],['FAIL','failures']]) {
+    el(id).textContent=String(cases.filter(c=>c.status===state).length);
+}
+const when=new Date(run.started.replace(/(\.\d{3})\d+Z$/,'$1Z'));
+el('run-meta').textContent='Recorded '+when.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})+'  ·  Java '+run.runtime.split('+')[0];
+el('hashes').textContent=run.sourceHashes;
+function make(tag,text,cls) {
+    const node=document.createElement(tag);
+    if (text!==undefined) node.textContent=text;
+    if (cls) node.className=cls;
+    return node;
+}
+function showCases() {
+    const filter=el('filter').value;
+    const items=cases.filter(c=>filter==='all'||c.group===filter||c.status===filter);
+    const fragment=document.createDocumentFragment();
+    for(const c of items) {
+        const row=make('details',undefined,'case');
+        const summary=make('summary');
+        const label={PASS:'Passed',LIMIT:'Limit',FAIL:'Failed'}[c.status];
+        summary.append(make('span',c.id,'caseid'),make('strong',c.title),make('span',label,'badge '+c.status.toLowerCase()));
+        const body=make('div',undefined,'case-body');
+        body.append(make('h3','Expectation'),make('p',c.expected),make('h3','Observed'),make('pre',c.notes.join('\n')));
+        row.append(summary,body);
+        fragment.append(row);
+    }
+    if(!items.length) fragment.append(make('p','No checks match this filter in the recorded run.'));
+    el('cases').textContent='';
+    el('cases').appendChild(fragment);
+}
+el('filter').addEventListener('change',showCases);
+showCases();
+el('disk-raw').textContent=run.diskLog;
+el('recent-raw').textContent=run.recentAfterReopen;
+if(!cases.some(c=>c.id==='H02')) el('audit-panel').hidden=true;
+function lines(raw) {
+    const normalized=raw.replace(/\r\n/g,'\n').replace(/\n$/,'');
+    return normalized ? normalized.split('\n') : [];
+}
+el('audit-btn').addEventListener('click',()=>{
+    const disk=lines(run.diskLog), recent=lines(run.recentAfterReopen);
+    const uuid=/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i;
+    const decimal=/^-?\d+\.\d{3}$/;
+    const valid=disk.filter((line,i)=>{
+        const p=line.split(' | ');
+        return p.length===5 && /^\d{4}-\d{2}-\d{2}T/.test(p[0]) && Number.isFinite(Date.parse(p[0]))
+            && uuid.test(p[1]) && p[2]==='SPEED' && decimal.test(p[3]) && Number(p[3])===9+i
+            && decimal.test(p[4]) && Number(p[4])===8;
+    }).length;
+    const tail=disk.slice(-20);
+    const matches=recent.filter((line,i)=>line===tail[i]).length;
+    const pass=disk.length===25 && valid===25 && recent.length===20 && matches===20;
+    el('audit-status').className=pass?'ok':'bad';
+    el('audit-status').textContent=(pass?'Passed. ':'Check failed. ')+valid+'/'+disk.length+
+        ' disk records match the expected format and values. '+matches+'/'+recent.length+' recent rows match in order.';
+});
+</script></body></html>
